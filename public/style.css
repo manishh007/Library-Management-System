@@ -180,3 +180,9 @@ td {
 td:hover {
   background: #FFE2AF;
 }
+
+button {
+  background: linear-gradient(to right, #3F9AAE, #79C9C5);
+  color: white;
+  font-weight: bold;
+}

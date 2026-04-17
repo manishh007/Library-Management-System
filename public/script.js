@@ -62,6 +62,64 @@ async function returnBook() {
     loadBooks();
 }
 
+async function searchBook() {
+    let name = document.getElementById("bookName").value.toLowerCase();
+    let author = document.getElementById("author").value;
+
+    if (!name && !author) {
+        alert("Enter book name or select author");
+        return;
+    }
+
+    let res = await fetch(API + "/books");
+    let books = await res.json();
+
+    let filtered = books.filter(b =>
+        (name ? b.title.toLowerCase().includes(name) : true) &&
+        (author ? b.author === author : true)
+    );
+
+    let html = "";
+
+    if (filtered.length === 0) {
+        html = "<p>No books found</p>";
+    } else {
+        filtered.forEach(b => {
+            html += `
+        <div class="card">
+          <h3>${b.title}</h3>
+          <p>${b.author}</p>
+          <p>${b.available ? "Available" : "Issued"}</p>
+        </div>
+      `;
+        });
+    }
+
+    document.getElementById("results").innerHTML = html;
+}
+
+async function loadAuthors() {
+    try {
+        let res = await fetch(API + "/books");
+        let books = await res.json();
+
+        console.log("Books:", books); // DEBUG
+
+        let authors = [...new Set(books.map(b => b.author))];
+
+        let dropdown = document.getElementById("author");
+
+        dropdown.innerHTML = `<option value="">Select Author</option>`;
+
+        authors.forEach(a => {
+            dropdown.innerHTML += `<option value="${a}">${a}</option>`;
+        });
+
+    } catch (err) {
+        console.error("Error loading authors:", err);
+    }
+}
+
 if (document.getElementById("books")) {
     loadBooks();
 }
@@ -108,7 +166,7 @@ function goHome() {
 
 // Navigation placeholders (you will connect later)
 function goAvailable() {
-    alert("Go to Book Available Page");
+    window.location = "availability.html";
 }
 
 function goIssue() {
@@ -121,4 +179,25 @@ function goReturn() {
 
 function goFine() {
     alert("Go to Fine Payment Page");
+}
+
+async function loadAuthors() {
+    let res = await fetch(API + "/books");
+    let books = await res.json();
+
+    let authors = [...new Set(books.map(b => b.author))];
+
+    let dropdown = document.getElementById("author");
+
+    authors.forEach(a => {
+        dropdown.innerHTML += `<option value="${a}">${a}</option>`;
+    });
+}
+
+if (document.getElementById("author")) {
+    loadAuthors();
+}
+
+function goTransactions() {
+    window.location = "transactions.html";
 }

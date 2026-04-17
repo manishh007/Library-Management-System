@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="user">
+
+    <div class="container">
+
+        <!-- NAV -->
+        <div class="nav user-nav">
+            <span>Chart</span>
+            <span onclick="goTransactions()">Transactions</span>
+            <span onclick="goHome()">Home</span>
+        </div>
+
+        <h2>Book Availability</h2>
+
+        <!-- FORM -->
+        <div class="card">
+
+            <label>Enter Book Name</label>
+            <input id="bookName" placeholder="Enter Book Name">
+
+            <label>Enter Author</label>
+            <select id="author">
+                <option value="">Select Author</option>
+            </select>
+
+            <div class="actions">
+                <button onclick="goTransactions()">Back</button>
+                <button onclick="searchBook()">Search</button>
+            </div>
+
+        </div>
+
+        <!-- RESULTS -->
+        <div id="results" class="grid"></div>
+
+        <!-- LOGOUT -->
+        <div class="actions">
+            <button onclick="logout()">Log Out</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
