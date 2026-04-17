@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="user">
+
+    <div class="container">
+
+        <!-- TOP NAV -->
+        <div class="nav user-nav">
+            <span>Chart</span>
+            <span>Transactions</span>
+            <span onclick="goHome()">Home</span>
+        </div>
+
+        <!-- TABLE MENU -->
+        <div class="table-container">
+            <table>
+                <tbody>
+                    <tr>
+                        <td onclick="goAvailable()">Is book available?</td>
+                    </tr>
+                    <tr>
+                        <td onclick="goIssue()">Issue book?</td>
+                    </tr>
+                    <tr>
+                        <td onclick="goReturn()">Return book?</td>
+                    </tr>
+                    <tr>
+                        <td onclick="goFine()">Pay Fine?</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- LOGOUT -->
+        <div class="actions">
+            <button onclick="logout()">Log Out</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

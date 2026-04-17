@@ -1,0 +1,182 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* CONTAINER */
+.container {
+  padding: 20px;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* USER THEME */
+.user {
+  background: #FFE2AF;
+}
+
+.user h1 {
+  color: #3F9AAE;
+}
+
+/* ADMIN THEME */
+.admin {
+  background: #ECF4E8;
+}
+
+.admin h1 {
+  color: #93BFC7;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* TEXT */
+.card h3 {
+  margin: 0 0 10px;
+}
+
+.card p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* USER BUTTON */
+.user button {
+  background: #3F9AAE;
+  color: white;
+}
+
+.user button:hover {
+  background: #F96E5B;
+}
+
+/* ADMIN BUTTON */
+.admin button {
+  background: #93BFC7;
+}
+
+.admin button:hover {
+  background: #ABE7B2;
+}
+
+/* STATUS */
+.available {
+  color: green;
+  font-weight: bold;
+}
+
+.issued {
+  color: red;
+  font-weight: bold;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+}
+
+/* NAV BAR */
+.nav {
+  display: flex;
+  justify-content: space-around;
+  background: #CBF3BB;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* TABLE */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #93BFC7;
+}
+
+/* BUTTONS */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.actions button {
+  width: 45%;
+}
+
+/* USER NAV */
+.user-nav {
+  display: flex;
+  justify-content: space-around;
+  background: #79C9C5;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.user-nav span {
+  cursor: pointer;
+}
+
+.user-nav span:hover {
+  color: #F96E5B;
+}
+
+td {
+  cursor: pointer;
+}
+
+td:hover {
+  background: #FFE2AF;
+}
