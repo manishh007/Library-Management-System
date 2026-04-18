@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // ✅ MongoDB connection
-mongoose.connect("mongodb+srv://namkeendb:11223344@cluster0.nalycjh.mongodb.net/?appName=Cluster0")
+mongoose.connect("mongodb+srv://namkeendb:11223344@cluster0.nalycjh.mongodb.net/library")
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 

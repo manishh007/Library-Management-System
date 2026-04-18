@@ -23,7 +23,7 @@
         <div class="card">
 
             <label>Enter Book Name</label>
-            <input id="bookName" placeholder="Enter Book Name">
+            <input id="bookName" placeholder="Enter Book Name" oninput="filterAuthors()">
 
             <label>Enter Author</label>
             <select id="author">
@@ -31,8 +31,8 @@
             </select>
 
             <div class="actions">
-                <button onclick="goTransactions()">Back</button>
                 <button onclick="searchBook()">Search</button>
+                <button onclick="goTransactions()">Back</button>
             </div>
 
         </div>

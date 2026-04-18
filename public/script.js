@@ -182,21 +182,69 @@ function goFine() {
 }
 
 async function loadAuthors() {
+    try {
+        console.log("Loading authors...");
+
+        let res = await fetch("http://localhost:5000/books");
+        let books = await res.json();
+
+        console.log("Books data:", books);
+
+        let authors = [...new Set(books.map(b => b.author))];
+
+        let dropdown = document.getElementById("author");
+
+        if (!dropdown) {
+            console.log("Dropdown not found");
+            return;
+        }
+
+        dropdown.innerHTML = `<option value="">Select Author</option>`;
+
+        authors.forEach(a => {
+            dropdown.innerHTML += `<option value="${a}">${a}</option>`;
+        });
+
+    } catch (err) {
+        console.error("Error:", err);
+    }
+}
+
+async function filterAuthors() {
+
+    // if (!name) {
+    //     loadAuthors();
+    //     return;
+    // }
+    let name = document.getElementById("bookName").value.toLowerCase();
+
     let res = await fetch(API + "/books");
     let books = await res.json();
 
-    let authors = [...new Set(books.map(b => b.author))];
+    let filtered = books.filter(b =>
+        b.title.toLowerCase().includes(name)
+    );
+
+    let authors = [...new Set(filtered.map(b => b.author))];
 
     let dropdown = document.getElementById("author");
+
+    dropdown.innerHTML = `<option value="">Select Author</option>`;
 
     authors.forEach(a => {
         dropdown.innerHTML += `<option value="${a}">${a}</option>`;
     });
 }
 
-if (document.getElementById("author")) {
-    loadAuthors();
-}
+window.onload = () => {
+    if (document.getElementById("author")) {
+        loadAuthors();
+    }
+
+    if (document.getElementById("books")) {
+        loadBooks();
+    }
+};
 
 function goTransactions() {
     window.location = "transactions.html";

@@ -186,3 +186,12 @@ button {
   color: white;
   font-weight: bold;
 }
+
+.nav span {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.nav span:hover {
+  color: #d43030;
+}
