@@ -22,32 +22,42 @@
         <!-- FORM -->
         <div class="card">
 
-            <label>Enter Book Name</label>
-            <input id="bookName" placeholder="Enter Book Name" oninput="filterAuthors()">
+            <!-- FORM ADDED FOR ENTER KEY -->
+            <form onsubmit="handleSearch(event)">
 
-            <label>Enter Author</label>
-            <select id="author">
-                <option value="">Select Author</option>
-            </select>
+                <label>Enter Book Name</label>
+                <input list="bookList" id="bookName" placeholder="Enter Book Name" oninput="filterAuthors()">
+                <datalist id="bookList"></datalist>
 
-            <div class="actions">
-                <button onclick="searchBook()">Search</button>
-                <button onclick="goTransactions()">Back</button>
-            </div>
+                <label>Enter Author</label>
+                <select id="author">
+                    <option value="">Select Author</option>
+                </select>
+
+                <!-- BUTTON GROUP -->
+                <div class="actions">
+                    <button type="submit">Search</button>
+                    <button type="button" onclick="goTransactions()">Back</button>
+                    <button type="button" onclick="resetSearch()">Reset</button>
+                </div>
+
+            </form>
 
         </div>
 
-        <!-- RESULTS -->
-        <div id="results" class="grid"></div>
+        <!-- RESULTS (changed from grid → normal div) -->
+        <div id="results"></div>
 
         <!-- LOGOUT -->
         <div class="actions">
             <button onclick="logout()">Log Out</button>
+            <button type="button" onclick="confirmBook()">Confirm</button>
         </div>
 
     </div>
 
     <script src="script.js"></script>
+    <div id="toast" class="toast"></div>
 </body>
 
 </html>

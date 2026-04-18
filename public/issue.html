@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="user">
+
+    <div class="container">
+
+        <!-- NAV -->
+        <div class="nav user-nav">
+            <span>Chart</span>
+            <span onclick="goTransactions()">Transactions</span>
+            <span onclick="goHome()">Home</span>
+        </div>
+
+        <h2>Book Issue</h2>
+
+        <div class="card">
+
+            <label>Enter Book Name</label>
+            <input list="issueBookList" id="issueBookName" oninput="filterIssueAuthors()">
+            <datalist id="issueBookList"></datalist>
+
+            <label>Enter Author</label>
+            <select id="issueAuthor">
+                <option value="">Select Author</option>
+            </select>
+
+            <label>Issue Date</label>
+            <input type="date" id="issueDate">
+
+            <label>Return Date</label>
+            <input type="date" id="returnDate">
+
+            <label>Remarks</label>
+            <textarea id="remarks"></textarea>
+
+            <div class="actions">
+                <button onclick="submitIssue()">Confirm</button>
+                <button onclick="goTransactions()">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <div id="toast" class="toast"></div>
+</body>
+
+</html>

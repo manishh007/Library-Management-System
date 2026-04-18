@@ -9,23 +9,35 @@
 
     <div class="container">
         <h1>🔐 Login</h1>
+        <span class="name">Library Manager</span>
 
         <div class="card">
-            <input id="username" placeholder="Username" />
 
-            <!-- PASSWORD HIDDEN -->
-            <input id="password" type="password" placeholder="Password" />
+            <!-- FORM ADDED -->
+            <form onsubmit="handleLogin(event)">
 
-            <select id="role">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
+                <input id="username" placeholder="Username" required />
 
-            <button onclick="login()">Login</button>
+                <!-- PASSWORD HIDDEN -->
+                <input id="password" type="password" placeholder="Password" required />
+
+                <select id="role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <!-- SMALL BUTTON -->
+                <div class="center-btn">
+                    <button type="submit" class="small-btn">Login</button>
+                </div>
+
+            </form>
+
         </div>
     </div>
 
     <script src="script.js"></script>
+    <div id="toast" class="toast"></div>
 </body>
 
 </html>
