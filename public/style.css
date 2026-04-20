@@ -22,6 +22,29 @@ body {
   gap: 20px;
 }
 
+.info {
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: center;       /* center vertically (if height exists) */
+  gap: 15px;                 /* space between detail boxes */
+  margin: 40px auto;
+  padding: 7px;
+  background-color: #f4b183; /* box background */
+  border-radius: 10px;
+  width: fit-content;        /* wrap tightly around content */
+}
+
+.detail {
+  background-color: #d9edf7;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 800;
+  text-align: center;
+  min-width: 150px;
+}
+
+
 /* USER THEME */
 .user {
   background: #FFE2AF;

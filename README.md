@@ -1,5 +1,9 @@
 # Library Management System
 
+## How to login (for testing)
+- For admin => [id:admin  pass:admin123]
+- For user => [id:user  pass:user123]
+
 ## Features
 - Book Search
 - Issue Book (15-day limit)
