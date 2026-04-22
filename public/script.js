@@ -606,3 +606,8 @@ function openReport(type) {
 
     // you can expand later
 }
+
+function goChart() {
+    window.location = "chart.html";
+}
+

@@ -440,3 +440,9 @@ h1, h2 {
   border: 1px solid black;
   padding: 10px;
 }
+
+img:hover {
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+
