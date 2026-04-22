@@ -16,30 +16,31 @@
             <span onclick="goHome()">Home</span>
         </div>
 
-        <h2>Book Issue</h2>
+        <h2>Return Book</h2>
 
         <div class="card">
 
-            <label required>Enter Book Name</label>
-            <input list="issueBookList" id="issueBookName" oninput="filterIssueAuthors()">
-            <datalist id="issueBookList"></datalist>
+            <label>Enter Book Name</label>
+            <input list="returnBookList" id="returnBookName" oninput="loadReturnDetails()">
+            <datalist id="returnBookList"></datalist>
 
             <label>Enter Author</label>
-            <select id="issueAuthor">
-                <option value="">Select Author</option>
-            </select>
+            <input id="returnAuthor" disabled>
+
+            <label>Serial No</label>
+            <select id="serialNo"></select>
 
             <label>Issue Date</label>
-            <input type="date" id="issueDate">
+            <input id="issueDateReturn" disabled>
 
             <label>Return Date</label>
-            <input type="date" id="returnDate">
+            <input type="date" id="returnDateReturn">
 
             <label>Remarks</label>
-            <textarea id="remarks"></textarea>
+            <textarea id="remarksReturn"></textarea>
 
             <div class="actions">
-                <button onclick="submitIssue()">Confirm</button>
+                <button onclick="submitReturn()">Confirm</button>
                 <button onclick="goTransactions()">Cancel</button>
             </div>
 

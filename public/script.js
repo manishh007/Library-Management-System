@@ -366,6 +366,27 @@ async function filterIssueAuthors() {
     filtered.forEach(b => {
         dropdown.innerHTML += `<option value="${b.author}">${b.author}</option>`;
     });
+
+    // ✅ AUTO SELECT AUTHOR (if exact match)
+    let exactBook = books.find(b =>
+        b.title.toLowerCase() === name
+    );
+
+    if (exactBook) {
+        dropdown.value = exactBook.author;
+
+        // ✅ AUTO SET DATES
+        let today = new Date().toISOString().split("T")[0];
+        document.getElementById("issueDate").value = today;
+
+        let returnDate = new Date();
+        returnDate.setDate(returnDate.getDate() + 15);
+        document.getElementById("returnDate").value =
+            returnDate.toISOString().split("T")[0];
+
+        // ✅ store selected book automatically
+        localStorage.setItem("selectedBook", exactBook._id);
+    }
 }
 
 // ================== TOAST ==================
@@ -388,4 +409,91 @@ window.onload = () => {
     if (document.getElementById("books")) loadBooks();
     if (document.getElementById("issueBookName")) loadIssuePage();
     if (document.getElementById("issueBookList")) loadIssueBooks();
+    if (document.getElementById("returnBookList")) loadReturnBooks();
 };
+
+async function loadReturnBooks() {
+    let res = await fetch(API + "/books");
+    let books = await res.json();
+
+    // only issued books
+    let issued = books.filter(b => !b.available);
+
+    let datalist = document.getElementById("returnBookList");
+    if (!datalist) return;
+
+    datalist.innerHTML = "";
+
+    issued.forEach(b => {
+        datalist.innerHTML += `<option value="${b.title}">`;
+    });
+}
+
+async function loadReturnDetails() {
+    let name = document.getElementById("returnBookName").value.toLowerCase();
+
+    let res = await fetch(API + "/books");
+    let books = await res.json();
+
+    let book = books.find(b =>
+        b.title.toLowerCase() === name && !b.available
+    );
+
+    if (!book) return;
+
+    // store selected
+    localStorage.setItem("returnBook", book._id);
+
+    // auto fill
+    document.getElementById("returnAuthor").value = book.author;
+    document.getElementById("issueDateReturn").value =
+        new Date(book.issueDate).toISOString().split("T")[0];
+
+    document.getElementById("returnDateReturn").value =
+        new Date().toISOString().split("T")[0];
+
+    // serial dropdown (single for now)
+    let serial = document.getElementById("serialNo");
+    serial.innerHTML = `<option value="${book.serialNo}">${book.serialNo}</option>`;
+}
+
+async function submitReturn() {
+    let bookId = localStorage.getItem("returnBook");
+
+    let paid = true; // for now (we'll separate fine page next)
+
+    if (!bookId) {
+        showToast("Select a book", "error");
+        return;
+    }
+
+    try {
+        let res = await fetch(API + "/books/return", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ bookId, paid })
+        });
+
+        let data = await res.json();
+
+        if (!res.ok) {
+            showToast(data.msg, "error");
+            return;
+        }
+
+        showToast(`Returned. Fine: ₹${data.fine}`, "success");
+
+        setTimeout(() => {
+            window.location = "transactions.html";
+        }, 1500);
+
+    } catch (err) {
+        showToast("Server error", "error");
+    }
+}
+
+function goReturn() {
+    window.location = "return.html";
+}
