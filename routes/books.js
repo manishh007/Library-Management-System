@@ -38,32 +38,46 @@ router.post("/issue", async (req, res) => {
 
 // RETURN BOOK + FINE
 router.post("/return", async (req, res) => {
-    const { bookId, paid } = req.body;
+    try {
+        const { bookId, paid } = req.body;
 
-    let book = await Book.findById(bookId);
-    let config = await Config.findOne();
+        let book = await Book.findById(bookId);
 
-    let today = new Date();
-    let fine = 0;
+        if (!book) {
+            return res.status(404).json({ msg: "Book not found" });
+        }
 
-    if (today > new Date(book.returnDate)) {
-        let days = Math.ceil(
-            (today - new Date(book.returnDate)) / (1000 * 60 * 60 * 24)
-        );
-        fine = days * config.finePerDay;
+        let today = new Date();
+        let fine = 0;
+
+        if (today > new Date(book.returnDate)) {
+
+            let days = Math.ceil(
+                (today - new Date(book.returnDate)) / (1000 * 60 * 60 * 24)
+            );
+
+            let config = await Config.findOne();
+            let finePerDay = config ? config.finePerDay : 10;
+
+            fine = days * finePerDay;
+        }
+
+        if (fine > 0 && !paid) {
+            return res.status(400).json({ msg: "Fine must be paid" });
+        }
+
+        await Book.findByIdAndUpdate(bookId, {
+            available: true,
+            issueDate: null,
+            returnDate: null
+        });
+
+        res.json({ msg: "Returned successfully", fine });
+
+    } catch (err) {
+        console.error("Return API error:", err);
+        res.status(500).json({ msg: "Server error" });
     }
-
-    if (fine > 0 && !paid) {
-        return res.status(400).json({ msg: "Fine must be paid" });
-    }
-
-    await Book.findByIdAndUpdate(bookId, {
-        available: true,
-        issueDate: null,
-        returnDate: null
-    });
-
-    res.json({ msg: "Returned", fine });
 });
 
 module.exports = router;

@@ -184,21 +184,28 @@ function login() {
 
     if (role === "admin") {
         if (username === "admin" && password === "admin123") {
+
+            localStorage.setItem("role", "admin"); // ✅ ADD THIS
+
             window.location = "admin.html";
         } else {
-            showToast("Invalid admin credentials", "error");
+            alert("Invalid admin credentials");
         }
     } else {
         if (username === "user" && password === "user123") {
+
+            localStorage.setItem("role", "user"); // ✅ ADD THIS
+
             window.location = "dashboard.html";
         } else {
-            showToast("Invalid user credentials", "error");
+            alert("Invalid user credentials");
         }
     }
 }
 
 // ================== NAVIGATION ==================
 function logout() {
+    localStorage.removeItem("role"); // ✅ IMPORTANT
     window.location = "index.html";
 }
 
@@ -207,7 +214,13 @@ function goTransactions() {
 }
 
 function goHome() {
-    window.location = "dashboard.html";
+    let role = localStorage.getItem("role");
+
+    if (role === "admin") {
+        window.location = "admin.html";
+    } else {
+        window.location = "dashboard.html";
+    }
 }
 
 function goAvailable() {
@@ -410,6 +423,8 @@ window.onload = () => {
     if (document.getElementById("issueBookName")) loadIssuePage();
     if (document.getElementById("issueBookList")) loadIssueBooks();
     if (document.getElementById("returnBookList")) loadReturnBooks();
+    if (document.getElementById("pfBook")) loadPayFine();
+
 };
 
 async function loadReturnBooks() {
@@ -460,10 +475,90 @@ async function loadReturnDetails() {
 async function submitReturn() {
     let bookId = localStorage.getItem("returnBook");
 
-    let paid = true; // for now (we'll separate fine page next)
-
     if (!bookId) {
         showToast("Select a book", "error");
+        return;
+    }
+
+    // store for next page
+    localStorage.setItem("payFineBook", bookId);
+
+    // redirect (NO API CALL HERE)
+    window.location = "payfine.html";
+}
+
+function goReturn() {
+    window.location = "return.html";
+}
+
+async function loadPayFine() {
+    let bookId = localStorage.getItem("payFineBook");
+    if (!bookId) return;
+
+    let res = await fetch(API + "/books");
+    let books = await res.json();
+
+    let book = books.find(b => b._id === bookId);
+    if (!book) return;
+
+    document.getElementById("pfBook").value = book.title;
+    document.getElementById("pfAuthor").value = book.author;
+    document.getElementById("pfSerial").value = book.serialNo;
+
+    let issue = new Date(book.issueDate);
+    let ret = new Date(book.returnDate);
+
+    document.getElementById("pfIssueDate").value =
+        issue.toISOString().split("T")[0];
+
+    document.getElementById("pfReturnDate").value =
+        ret.toISOString().split("T")[0];
+
+    let today = new Date().toISOString().split("T")[0];
+    document.getElementById("pfActualDate").value = today;
+
+    calculateFine();
+}
+
+async function calculateFine() {
+    let returnDate = document.getElementById("pfReturnDate").value;
+    let actualDate = document.getElementById("pfActualDate").value;
+
+    if (!returnDate || !actualDate) return;
+
+    let returnD = new Date(returnDate);
+    let actualD = new Date(actualDate);
+
+    let fine = 0;
+
+    if (actualD > returnD) {
+        let days = Math.ceil((actualD - returnD) / (1000 * 60 * 60 * 24));
+
+        try {
+            let res = await fetch(API + "/admin/config");
+            let config = await res.json();
+
+            let finePerDay = config?.finePerDay || 10;
+
+            fine = days * finePerDay;
+
+        } catch (err) {
+            console.error("Config fetch error", err);
+            fine = days * 10;
+        }
+    }
+
+    document.getElementById("pfFine").value = fine;
+}
+
+async function confirmFine() {
+    let bookId = localStorage.getItem("payFineBook");
+    let fine = Number(document.getElementById("pfFine").value);
+    let paid = document.getElementById("pfPaid").checked;
+
+    // RULES FROM EXCEL
+    if (fine > 0 && !paid) {
+        showToast("Please pay fine before proceeding", "error");
         return;
     }
 
@@ -483,9 +578,10 @@ async function submitReturn() {
             return;
         }
 
-        showToast(`Returned. Fine: ₹${data.fine}`, "success");
+        showToast("Transaction completed", "success");
 
         setTimeout(() => {
+            localStorage.removeItem("payFineBook");
             window.location = "transactions.html";
         }, 1500);
 
@@ -494,6 +590,19 @@ async function submitReturn() {
     }
 }
 
-function goReturn() {
-    window.location = "return.html";
+function goReports() {
+    window.location = "reports.html";
+}
+
+function openReport(type) {
+
+    if (type === "books") {
+        showToast("Showing Books Report", "info");
+    }
+
+    if (type === "overdue") {
+        showToast("Showing Overdue Books", "info");
+    }
+
+    // you can expand later
 }

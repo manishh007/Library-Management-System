@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="admin">
+
+    <div class="container">
+
+        <!-- TOP NAV -->
+        <div class="nav">
+            <span>Chart</span>
+            <span onclick="goHome()">Home</span>
+        </div>
+
+        <h2>Available Reports</h2>
+
+        <!-- MAIN LAYOUT -->
+        <div class="reports-layout">
+
+            <!-- LEFT SIDE -->
+            <div class="reports-menu">
+                <ul>
+                    <li onclick="openReport('books')">Master List of Books</li>
+                    <li onclick="openReport('movies')">Master List of Movies</li>
+                    <li onclick="openReport('memberships')">Master List of Memberships</li>
+                    <li onclick="openReport('issues')">Active Issues</li>
+                    <li onclick="openReport('overdue')">Overdue Returns</li>
+                    <li onclick="openReport('pending')">Pending Issue Requests</li>
+                </ul>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="reports-content" id="reportContent">
+                <p>Select any option</p>
+            </div>
+
+        </div>
+
+        <!-- LOGOUT -->
+        <div class="actions">
+            <button onclick="logout()">Log Out</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

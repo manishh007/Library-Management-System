@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="user">
+
+    <div class="container">
+
+        <div class="nav user-nav">
+            <span>Chart</span>
+            <span onclick="goTransactions()">Transactions</span>
+            <span onclick="goHome()">Home</span>
+        </div>
+
+        <h2>Pay Fine</h2>
+
+        <div class="card">
+
+            <label>Book Name</label>
+            <input id="pfBook" disabled>
+
+            <label>Author</label>
+            <input id="pfAuthor" disabled>
+
+            <label>Serial No</label>
+            <input id="pfSerial" disabled>
+
+            <label>Issue Date</label>
+            <input id="pfIssueDate" disabled>
+
+            <label>Return Date</label>
+            <input id="pfReturnDate" disabled>
+
+            <label>Actual Return Date</label>
+            <input type="date" id="pfActualDate" onchange="calculateFine()">
+
+            <label>Fine Calculated</label>
+            <input id="pfFine" value="0" disabled>
+
+            <label>
+                <input type="checkbox" id="pfPaid">
+                Fine Paid
+            </label>
+
+            <label>Remarks</label>
+            <textarea id="pfRemarks"></textarea>
+
+            <div class="actions">
+                <button onclick="goTransactions()">Cancel</button>
+                <button onclick="confirmFine()">Confirm</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <div id="toast" class="toast"></div>
+</body>
+
+</html>
