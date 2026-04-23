@@ -227,6 +227,10 @@ function goAvailable() {
     window.location = "availability.html";
 }
 
+function goFine() {
+    window.location = "payfine.html";
+}
+
 function goIssue() {
     window.location = "issue.html";
 }
